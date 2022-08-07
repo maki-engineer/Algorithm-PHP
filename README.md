@@ -5,12 +5,12 @@ The search.php file contains the sorting algorithm, and the sort.php file contai
 # search.php
 The search.php file contains the following algorithm.
 
-*Bubble Sort
-*Selection Sort
-*Insertion Sort
-*Shell Sort
-*Quick Sort
-*Merge Sort
+* Bubble Sort
+* Selection Sort
+* Insertion Sort
+* Shell Sort
+* Quick Sort
+* Merge Sort
 
 # sort.php
 The sort.php file contains the following algorithm.
