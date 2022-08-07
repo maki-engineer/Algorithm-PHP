@@ -104,6 +104,9 @@ class Sort{
       return "ERROR: Specify 0 or 1 for the second argument.";
     }
   }
+
+  // ヒープソート
+  public function heapSort(){}
 }
 
 $result = new Sort(array(2, 6, 5, 1, 3, 4, 2, -5), 1);
