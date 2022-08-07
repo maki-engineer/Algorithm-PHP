@@ -4,25 +4,62 @@ class Sort{
   private $array;
   private $sortOrderSelection;
 
-  public function __construct($array, $sortOrderSelection){
+  public function __construct($array = "no data.", $sortOrderSelection = "no data."){
     $this->array              = $array;
     $this->sortOrderSelection = $sortOrderSelection;
   }
 
   // バブルソート
   public function bubbleSort(){
-    $array       = $this->array;
-    $resultCount = 0;
+    $array              = $this->array;
+    $sortOrderSelection = $this->sortOrderSelection;
+    $resultCount        = 0;
+    $errorArray         = array();
 
     print_r("------------------------------------------------------------\nBubble Sort");
 
-    // 第1引数に配列以外が渡されたときのエラー処理
-    if(!is_array($array)){
-      return "\n\nERROR: Specify an array for the first argument.\n------------------------------------------------------------\n";
+    // エラー処理
+    if(($array == "no data.") || ($sortOrderSelection == "no data.")){
+      array_push($errorArray, "ERROR: No value has been set. Set the array containing the value in the first argument and the specify integer of 0 or 1 in the second argument.\n");
+    }
+
+    // 第1引数のエラー処理
+    {
+      // 配列かチェック
+      if(($array != "no data.") && (!is_array($array))){
+        array_push($errorArray, "ERROR: Specify the array containing the elements in the first argument.\n");
+      }
+      // 空チェック
+      if(empty($array)){
+        array_push($errorArray, "ERROR: The contents of the array of the first argument is empty. set the element.\n");
+      }
+    }
+
+    // 第2引数のエラー処理
+    {
+      // 整数かチェック
+      if(($sortOrderSelection != "no data.") && (!is_int($sortOrderSelection))){
+        array_push($errorArray, "ERROR: Specify integer of 0 or 1 for the second argument.\n");
+      }
+      // 0か1のどっちかかチェック
+      if((is_int($sortOrderSelection)) && ($sortOrderSelection > 1)){
+        array_push($errorArray, "ERROR: Specify integer of 0 or 1 for the second argument.\n");
+      }
+    }
+
+    // エラー出力
+    if(!empty($errorArray)){
+      print_r("\n\n");
+
+      foreach($errorArray as $errorMessage){
+        print_r($errorMessage);
+      }
+
+      return "------------------------------------------------------------\n";
     }
 
     // 0が昇順、1が降順、それ以外はエラー
-    if($this->sortOrderSelection == 0){
+    if($sortOrderSelection == 0){
       print_r("\nto Ascending Order...\n\n");
 
       $to = count($array) - 1;
@@ -48,7 +85,7 @@ class Sort{
       }while($count != 0);
 
       return "\nSort Count: ".$resultCount."\nResult: [".implode(", ", $array)."]\n------------------------------------------------------------\n";
-    }elseif($this->sortOrderSelection == 1){
+    }elseif($sortOrderSelection == 1){
       print_r("\nto Descending Order...\n\n");
 
       $to = 0;
@@ -74,8 +111,6 @@ class Sort{
       }while($count != 0);
 
       return "\nSort Count: ".$resultCount."\nResult: [".implode(", ", $array)."]\n------------------------------------------------------------\n";
-    }else{
-      return "\n\nERROR: Specify 0 or 1 for the second argument.\n------------------------------------------------------------\n";
     }
   }
 
@@ -154,20 +189,28 @@ class Sort{
 }
 
 // クラス生成
-$ascendingOrderResult      = new Sort(array(2, 6, 5, 1, 3, 4, 2, -5), 0);
-$descendingOrderResult     = new Sort(array(2, 6, 5, 1, 3, 4, 2, -5), 1);
-$secondArgumentErrorResult = new Sort(array(2, 6, 5, 1, 3, 4, 2, -5), 2);
-$firstArgumentErrorResult  = new Sort(404, 2);
+$ascendingOrderResult                                = new Sort(array(2, 6, 5, 1, 3, 4, 2, -5), 0);
+$descendingOrderResult                               = new Sort(array(2, 6, 5, 1, 3, 4, 2, -5), 1);
+$firstArgumentErrorResult                            = new Sort(404, 1);
+$firstEmptyErrorResult                               = new Sort([], 0);
+$secondArgumentErrorResult                           = new Sort(array(2, 6, 5, 1, 3, 4, 2, -5), array(4, 0, 4));
+$secondNotZeroAndOneErrorResult                      = new Sort(array(2, 6, 5, 1, 3, 4, 2, -5), 404);
+$firstArgumentErrorAndSecondArgumentErrorResult      = new Sort(404, array(4, 0, 4));
+$firstArgumentErrorAndSecondNotZeroAndOneErrorResult = new Sort(404, 404);
+$firstEmptyErrorAndSecondArgumentErrorResult         = new Sort([], array(4, 0, 4));
+$firstEmptyErrorAndSecondNotZeroAndOneErrorResult    = new Sort([], 404);
+$notSetErrorResult                                   = new Sort();
 
 // 結果出力
 // バブルソート
 {
-  print_r($ascendingOrderResult->bubbleSort());
+  // 正常系:渡された配列を昇順にする
+  // print_r($ascendingOrderResult->bubbleSort());
   /*
   ------------------------------------------------------------
   Bubble Sort
   to Ascending Order...
-  
+
   [2, 5, 1, 3, 4, 2, -5, 6] >> 1
   [2, 1, 3, 4, 2, -5, 5, 6] >> 2
   [1, 2, 3, 2, -5, 4, 5, 6] >> 3
@@ -175,40 +218,120 @@ $firstArgumentErrorResult  = new Sort(404, 2);
   [1, 2, -5, 2, 3, 4, 5, 6] >> 5
   [1, -5, 2, 2, 3, 4, 5, 6] >> 6
   [-5, 1, 2, 2, 3, 4, 5, 6] >> 7
-  
+
   Sort Count: 7
   Result: [-5, 1, 2, 2, 3, 4, 5, 6]
   ------------------------------------------------------------
   */
-  print_r($descendingOrderResult->bubbleSort());
+
+  // 正常系:渡された配列を降順にする
+  // print_r($descendingOrderResult->bubbleSort());
   /*
   ------------------------------------------------------------
   Bubble Sort
   to Descending Order...
-  
+
   [6, 2, 5, 4, 1, 3, 2, -5] >> 1
   [6, 5, 2, 4, 3, 1, 2, -5] >> 2
   [6, 5, 4, 2, 3, 2, 1, -5] >> 3
   [6, 5, 4, 3, 2, 2, 1, -5] >> 4
-  
+
   Sort Count: 4
   Result: [6, 5, 4, 3, 2, 2, 1, -5]
   ------------------------------------------------------------
   */
-  print_r($secondArgumentErrorResult->bubbleSort());
+
+  // 第1引数に配列以外をセットした場合のエラー
+  // print_r($firstArgumentErrorResult->bubbleSort());
   /*
   ------------------------------------------------------------
   Bubble Sort
-  
+
+  ERROR: Specify the array containing the elements in the first argument.
+  ------------------------------------------------------------
+  */
+
+  // 第1引数に空の配列をセットした場合のエラー
+  // print_r($firstEmptyErrorResult->bubbleSort());
+  /*
+  ------------------------------------------------------------
+  Bubble Sort
+
+  ERROR: The contents of the array of the first argument is empty. set the element.
+  ------------------------------------------------------------
+  */
+
+  // 第2引数に整数以外をセットした場合のエラー
+  // print_r($secondArgumentErrorResult->bubbleSort());
+  /*
+  ------------------------------------------------------------
+  Bubble Sort
+
   ERROR: Specify 0 or 1 for the second argument.
   ------------------------------------------------------------
   */
-  print_r($firstArgumentErrorResult->bubbleSort());
+
+  // 第2引数に0と1以外をセットした場合のエラー
+  // print_r($secondNotZeroAndOneErrorResult->bubbleSort());
   /*
   ------------------------------------------------------------
   Bubble Sort
-  
-  ERROR: Specify an array for the first argument.
+
+  ERROR: Specify integer of 0 or 1 for the second argument.
+  ------------------------------------------------------------
+  */
+
+  // 第1引数に配列以外かつ第2引数に整数以外をセットした場合のエラー
+  // print_r($firstArgumentErrorAndSecondArgumentErrorResult->bubbleSort());
+  /*
+  ------------------------------------------------------------
+  Bubble Sort
+
+  ERROR: Specify the array containing the elements in the first argument.
+  ERROR: Specify integer of 0 or 1 for the second argument.
+  ------------------------------------------------------------
+  */
+
+  // 第1引数に配列以外かつ第2引数に0か1以外をセットした場合のエラー
+  // print_r($firstArgumentErrorAndSecondNotZeroAndOneErrorResult->bubbleSort());
+  /*
+  ------------------------------------------------------------
+  Bubble Sort
+
+  ERROR: Specify the array containing the elements in the first argument.
+  ERROR: Specify integer of 0 or 1 for the second argument.
+  ------------------------------------------------------------
+  */
+
+  // 第1引数に空配列かつ第2引数に整数以外をセットした場合のエラー
+  // print_r($firstEmptyErrorAndSecondArgumentErrorResult->bubbleSort());
+  /*
+  ------------------------------------------------------------
+  Bubble Sort
+
+  ERROR: The contents of the array of the first argument is empty. set the element.
+  ERROR: Specify integer of 0 or 1 for the second argument.
+  ------------------------------------------------------------
+  */
+
+  // 第1引数に空配列かつ第2引数に0か1以外をセットした場合のエラー
+  // print_r($firstEmptyErrorAndSecondNotZeroAndOneErrorResult->bubbleSort());
+  /*
+  ------------------------------------------------------------
+  Bubble Sort
+
+  ERROR: The contents of the array of the first argument is empty. set the element.
+  ERROR: Specify integer of 0 or 1 for the second argument.
+  ------------------------------------------------------------
+  */
+
+  // 引数をセットしていない場合のエラー
+  // print_r($notSetErrorResult->bubbleSort());
+  /*
+  ------------------------------------------------------------
+  Bubble Sort
+
+  ERROR: No value has been set. Set the array containing the value in the first argument and the specify integer of 0 or 1 in the second argument.
   ------------------------------------------------------------
   */
 }
