@@ -16,7 +16,12 @@ class Sort{
 
     print_r("------------------------------------------------------------\nBubble Sort");
 
-    // 0が昇順、1が降順
+    // 第1引数に配列以外が渡されたときのエラー処理
+    if(!is_array($array)){
+      return "\n\nERROR: Specify an array for the first argument.\n------------------------------------------------------------\n";
+    }
+
+    // 0が昇順、1が降順、それ以外はエラー
     if($this->sortOrderSelection == 0){
       print_r("\nto Ascending Order...\n\n");
 
@@ -37,9 +42,9 @@ class Sort{
         if($count != 0){
           $resultCount++;
           $to--;
+          print_r("[".implode(", ", $array)."] >> ".$resultCount."\n");
         }
 
-        print_r("[".implode(", ", $array)."]\n");
       }while($count != 0);
 
       return "\nSort Count: ".$resultCount."\nResult: [".implode(", ", $array)."]\n------------------------------------------------------------\n";
@@ -63,9 +68,9 @@ class Sort{
         if($count != 0){
           $resultCount++;
           $to++;
+          print_r("[".implode(", ", $array)."] >> ".$resultCount."\n");
         }
 
-        print_r("[".implode(", ", $array)."]\n");
       }while($count != 0);
 
       return "\nSort Count: ".$resultCount."\nResult: [".implode(", ", $array)."]\n------------------------------------------------------------\n";
@@ -149,14 +154,61 @@ class Sort{
 }
 
 // クラス生成
-$ascendingOrderResult  = new Sort(array(2, 6, 5, 1, 3, 4, 2, -5), 0);
-$descendingOrderResult = new Sort(array(2, 6, 5, 1, 3, 4, 2, -5), 1);
-$errorResult           = new Sort(array(2, 6, 5, 1, 3, 4, 2, -5), 2);
+$ascendingOrderResult      = new Sort(array(2, 6, 5, 1, 3, 4, 2, -5), 0);
+$descendingOrderResult     = new Sort(array(2, 6, 5, 1, 3, 4, 2, -5), 1);
+$secondArgumentErrorResult = new Sort(array(2, 6, 5, 1, 3, 4, 2, -5), 2);
+$firstArgumentErrorResult  = new Sort(404, 2);
 
 // 結果出力
 // バブルソート
 print_r($ascendingOrderResult->bubbleSort());
+/*
+------------------------------------------------------------
+Bubble Sort
+to Ascending Order...
+
+[2, 5, 1, 3, 4, 2, -5, 6] >> 1
+[2, 1, 3, 4, 2, -5, 5, 6] >> 2
+[1, 2, 3, 2, -5, 4, 5, 6] >> 3
+[1, 2, 2, -5, 3, 4, 5, 6] >> 4
+[1, 2, -5, 2, 3, 4, 5, 6] >> 5
+[1, -5, 2, 2, 3, 4, 5, 6] >> 6
+[-5, 1, 2, 2, 3, 4, 5, 6] >> 7
+
+Sort Count: 7
+Result: [-5, 1, 2, 2, 3, 4, 5, 6]
+------------------------------------------------------------
+*/
 print_r($descendingOrderResult->bubbleSort());
-print_r($errorResult->bubbleSort());
+/*
+------------------------------------------------------------
+Bubble Sort
+to Descending Order...
+
+[6, 2, 5, 4, 1, 3, 2, -5] >> 1
+[6, 5, 2, 4, 3, 1, 2, -5] >> 2
+[6, 5, 4, 2, 3, 2, 1, -5] >> 3
+[6, 5, 4, 3, 2, 2, 1, -5] >> 4
+
+Sort Count: 4
+Result: [6, 5, 4, 3, 2, 2, 1, -5]
+------------------------------------------------------------
+*/
+print_r($secondArgumentErrorResult->bubbleSort());
+/*
+------------------------------------------------------------
+Bubble Sort
+
+ERROR: Specify 0 or 1 for the second argument.
+------------------------------------------------------------
+*/
+print_r($firstArgumentErrorResult->bubbleSort());
+/*
+------------------------------------------------------------
+Bubble Sort
+
+ERROR: Specify an array for the first argument.
+------------------------------------------------------------
+*/
 
 ?>
