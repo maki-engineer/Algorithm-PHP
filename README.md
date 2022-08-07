@@ -20,4 +20,4 @@ The sort.php file contains the following algorithm.
 * Binary Search
 * Hash Table Search
 * Open Address
-* HashChain
+* Hash Chain
