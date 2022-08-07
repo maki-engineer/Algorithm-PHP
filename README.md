@@ -11,6 +11,13 @@ The search.php file contains the following algorithm.
 * Shell Sort
 * Quick Sort
 * Merge Sort
+* Heap Sort
 
 # sort.php
 The sort.php file contains the following algorithm.
+
+* Linear Search
+* Binary Search
+* Hash Table Search
+* Open Address
+* HashChain
