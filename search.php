@@ -9,6 +9,11 @@ class Search{
     $this->searchNum = $searchNum;
   }
 
+  // 色付け関数
+  private function cecho($m, $c = 30) {
+    return sprintf("\033[%dm %s \033[m", $c, $m);
+  }
+
   // 線形探索法
   public function linearSearch(){}
 
