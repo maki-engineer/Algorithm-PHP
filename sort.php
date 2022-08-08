@@ -32,7 +32,7 @@ class Sort{
     {
       // 配列かチェック
       if(($array != "no data.") && (!is_array($array))){
-        array_push($errorArray, ": Specify the array containing the elements in the first argument.");
+        array_push($errorArray, ": A value other than an array is specified in the first argument. Specify the array containing the elements in the first argument.");
       }
       // 空チェック
       if(empty($array)){
@@ -84,11 +84,13 @@ class Sort{
         if($count != 0){
           $resultCount++;
           $to--;
+          sleep(2);
           echo("[".implode(", ", $array)."] >> ".$resultCount."\n");
         }
 
       }while($count != 0);
 
+      sleep(2);
       return "\n".$this->cecho("SUCCESS", 42).$this->cecho("\nSort Count: ".$resultCount, 32).$this->cecho("\nResult: [".implode(", ", $array)."]", 32);
     }elseif($sortOrderSelection == 1){
       echo("\nto Descending Order...\n\n");
@@ -110,11 +112,13 @@ class Sort{
         if($count != 0){
           $resultCount++;
           $to++;
+          sleep(2);
           echo("[".implode(", ", $array)."] >> ".$resultCount."\n");
         }
 
       }while($count != 0);
 
+      sleep(2);
       return "\n".$this->cecho("SUCCESS", 42).$this->cecho("\nSort Count: ".$resultCount, 32).$this->cecho("\nResult: [".implode(", ", $array)."]", 32);
     }
   }
@@ -250,7 +254,7 @@ $notSetErrorResult                                   = new Sort();
   /*
   Bubble Sort
 
-  ERROR: Specify the array containing the elements in the first argument.
+  ERROR: A value other than an array is specified in the first argument. Specify the array containing the elements in the first argument.
 
   */
 
@@ -286,7 +290,7 @@ $notSetErrorResult                                   = new Sort();
   /*
   Bubble Sort
 
-  ERROR: Specify the array containing the elements in the first argument.
+  ERROR: A value other than an array is specified in the first argument. Specify the array containing the elements in the first argument.
   ERROR: Specify integer of 0 or 1 for the second argument.
 
   */
@@ -296,7 +300,7 @@ $notSetErrorResult                                   = new Sort();
   /*
   Bubble Sort
 
-  ERROR: Specify the array containing the elements in the first argument.
+  ERROR: A value other than an array is specified in the first argument. Specify the array containing the elements in the first argument.
   ERROR: Specify integer of 0 or 1 for the second argument.
 
   */
