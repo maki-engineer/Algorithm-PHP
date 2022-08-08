@@ -44,11 +44,11 @@ class Sort{
     {
       // 整数かチェック
       if(($sortOrderSelection != "no data.") && (!is_int($sortOrderSelection))){
-        array_push($errorArray, ": Specify integer of 0 or 1 for the second argument.");
+        array_push($errorArray, ": A value other than an integer is specified in the second argument. Specify integer of 0 or 1 for the second argument.");
       }
       // 0か1のどっちかかチェック
       if((is_int($sortOrderSelection)) && ($sortOrderSelection > 1)){
-        array_push($errorArray, ": Specify integer of 0 or 1 for the second argument.");
+        array_push($errorArray, ": An integer other than 0 or 1 is specified in the second argument. Specify integer of 0 or 1 for the second argument.");
       }
     }
 
@@ -272,7 +272,7 @@ $notSetErrorResult                                   = new Sort();
   /*
   Bubble Sort
 
-  ERROR: Specify 0 or 1 for the second argument.
+  ERROR: A value other than an integer is specified in the second argument. Specify 0 or 1 for the second argument.
 
   */
 
@@ -281,7 +281,7 @@ $notSetErrorResult                                   = new Sort();
   /*
   Bubble Sort
 
-  ERROR: Specify integer of 0 or 1 for the second argument.
+  ERROR: An integer other than 0 or 1 is specified in the second argument. Specify integer of 0 or 1 for the second argument.
 
   */
 
@@ -291,7 +291,7 @@ $notSetErrorResult                                   = new Sort();
   Bubble Sort
 
   ERROR: A value other than an array is specified in the first argument. Specify the array containing the elements in the first argument.
-  ERROR: Specify integer of 0 or 1 for the second argument.
+  ERROR: A value other than an integer is specified in the second argument. Specify integer of 0 or 1 for the second argument.
 
   */
 
@@ -301,7 +301,7 @@ $notSetErrorResult                                   = new Sort();
   Bubble Sort
 
   ERROR: A value other than an array is specified in the first argument. Specify the array containing the elements in the first argument.
-  ERROR: Specify integer of 0 or 1 for the second argument.
+  ERROR: An integer other than 0 or 1 is specified in the second argument. Specify integer of 0 or 1 for the second argument.
 
   */
 
@@ -311,7 +311,7 @@ $notSetErrorResult                                   = new Sort();
   Bubble Sort
 
   ERROR: The contents of the array of the first argument is empty. set the element.
-  ERROR: Specify integer of 0 or 1 for the second argument.
+  ERROR: A value other than an integer is specified in the second argument. Specify integer of 0 or 1 for the second argument.
 
   */
 
@@ -321,7 +321,7 @@ $notSetErrorResult                                   = new Sort();
   Bubble Sort
 
   ERROR: The contents of the array of the first argument is empty. set the element.
-  ERROR: Specify integer of 0 or 1 for the second argument.
+  ERROR: An integer other than 0 or 1 is specified in the second argument. Specify integer of 0 or 1 for the second argument.
 
   */
 
