@@ -4,7 +4,7 @@ class Search{
   private $array;
   private $searchNum;
 
-  public function __construct($array, $searchNum){
+  public function __construct($array = "no data.", $searchNum = "no data."){
     $this->array     = $array;
     $this->searchNum = $searchNum;
   }
