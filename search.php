@@ -74,6 +74,7 @@ class Search{
     $arraySize = count($array);      // 要素数記憶
     array_push($array, $searchNum);  // 番兵格納
 
+    // 探索実行
     for($i = 0; $i < count($array); $i++){
       if($array[$i] == $searchNum){
         if($i != $arraySize){
@@ -90,6 +91,7 @@ class Search{
       }
     }
 
+    // 結果表示
     if($resultBool){
       sleep(2);
       return "\n\n".$this->cecho("SUCCESS", 42).$this->cecho("\nSearch Count: ".$resultSearchCount, 32);
@@ -100,7 +102,133 @@ class Search{
   }
 
   // 2分探索法
-  public function binarySearch(){}
+  public function binarySearch(){
+    $array             = $this->array;
+    $searchNum         = $this->searchNum;
+    $errorArray        = array();
+
+    echo("Binary Search\n");
+
+    // 引数が渡されてるかどうか
+    if(($array == "no data.") || ($searchNum == "no data.")){
+      array_push($errorArray, ": No value has been set. Set the array containing the value in the first argument and the you want to search integer in the second argument.");
+    }
+
+    // 第1引数のエラー処理
+    {
+      // 配列かチェック
+      if(($array != "no data.") && (!is_array($array))){
+        array_push($errorArray, ": A value other than an array is specified in the first argument. Specify the array containing the elements in the first argument.");
+      }
+      // 空チェック
+      if(empty($array)){
+        array_push($errorArray, ": The contents of the array of the first argument is empty. set the element.");
+      }
+      // 昇順か降順かどうか
+      $checkNotAscendingOrderOrDescendingOrder = false;
+
+      if((!empty($array)) && (is_array($array))){
+        for($i = 0; $i < count($array) - 1; $i++){
+          if(abs($array[$i] - $array[$i + 1]) != 1){
+            $checkNotAscendingOrderOrDescendingOrder = true;
+            break;
+          }
+        }
+      }
+
+      if($checkNotAscendingOrderOrDescendingOrder){
+        array_push($errorArray, ": An array that is not sorted in ascending or descending order is specified in the first argument. Specify an array that is sorted in ascending or descending order.");
+      }
+    }
+
+    // 第2引数のエラー処理
+    {
+      // 整数かチェック
+      if(($searchNum != "no data.") && (!is_int($searchNum))){
+        array_push($errorArray, ": A value other than an integer is specified in the second argument. Specify an integer.");
+      }
+      // 第2引数に指定した整数が配列に含まれているかどうか
+      if((is_int($searchNum)) && (is_array($array)) && (!in_array($searchNum, $array))){
+        array_push($errorArray, ": An integer that is not included in the array of the first argument is specified in the second argument. Specify an integer contained in the array specified in the first argument.");
+      }
+    }
+
+    // エラー出力
+    if(!empty($errorArray)){
+      echo("\n");
+
+      foreach($errorArray as $errorMessage){
+        echo($this->cecho("ERROR", 41).$this->cecho($errorMessage, 31)."\n");
+      }
+
+      echo("\n");
+
+      return;
+    }
+
+    // 探索実行
+    $resultSearchCount = 0;
+    $notSearch         = true;
+    $from              = 0;
+    $to                = count($array) - 1;
+
+    // 昇順か降順か
+    if($array[0] - $array[1] == -1){
+      while($notSearch){
+        $middleIndex = floor(($from + $to) / 2);
+        $middleNum   = $array[$middleIndex];
+  
+        sleep(2);
+  
+        if($searchNum == $middleNum){
+          $resultSearchCount++;
+  
+          echo("\n[".$middleNum."] << now data  ".$resultSearchCount."  search data >> [".$searchNum."] ".$this->cecho("matched!", 32));
+  
+          $notSearch = false;
+        }else{
+          $resultSearchCount++;
+  
+          echo("\n[".$middleNum."] << now data  ".$resultSearchCount."  search data >> [".$searchNum."]");
+  
+          if($searchNum < $middleNum){
+            $to   = $middleIndex - 1;
+          }else{
+            $from = $middleIndex + 1;
+          }
+        }
+      }
+    }else{
+      while($notSearch){
+        $middleIndex = floor(($from + $to) / 2);
+        $middleNum   = $array[$middleIndex];
+  
+        sleep(2);
+  
+        if($searchNum == $middleNum){
+          $resultSearchCount++;
+  
+          echo("\n[".$middleNum."] << now data  ".$resultSearchCount."  search data >> [".$searchNum."] ".$this->cecho("matched!", 32));
+  
+          $notSearch = false;
+        }else{
+          $resultSearchCount++;
+  
+          echo("\n[".$middleNum."] << now data  ".$resultSearchCount."  search data >> [".$searchNum."]");
+  
+          if($searchNum < $middleNum){
+            $from   = $middleIndex - 1;
+          }else{
+            $to = $middleIndex + 1;
+          }
+        }
+      }
+    }
+
+    // 結果表示
+    sleep(2);
+    return "\n\n".$this->cecho("SUCCESS", 42).$this->cecho("\nSearch Count: ".$resultSearchCount, 32);
+  }
 
   // ハッシュ表探索
   public function HashTableSearch(){}
@@ -113,16 +241,22 @@ class Search{
 }
 
 // クラス生成
-$binarySearchResult                                           = new Search(array(1, 2, 3, 4, 5, 6, 7), 5);
-$notAscendingOrderOrDescendingOrderErrorResultForBinarySearch = new Search(array(6, 9, 3, 4, 1, 0, -7), 4);
-$otherSearchResult                                            = new Search(array(6, 9, 3, 4, 1, 0, -7), 4);
-$canNotSearchResult                                           = new Search(array(6, 9, 3, 4, 1, 0, -7), 8);
-$firstArgumentErrorResult                                     = new Search(404, 4);
-$firstEmptyErrorResult                                        = new Search(array(), 4);
-$secondArgumentErrorResult                                    = new Search(array(6, 9, 3, 4, 1, 0, -7), array(4, 0, 4));
-$firstArgumentErrorAndSecondArgumentErrorResult               = new Search(404, array(4, 0, 4));
-$firstEmptyErrorAndSecondArgumentErrorResult                  = new Search(array(), array(4, 0, 4));
-$notSetErrorResult                                            = new Search();
+$binarySearchToAscendingOrderResult                                                   = new Search(array(1, 2, 3, 4, 5, 6, 7), 5);
+$binarySearchToDescendingOrderResult                                                  = new Search(array(7, 6, 5, 4, 3, 2, 1), 6);
+$notAscendingOrderOrDescendingOrderErrorResultForBinarySearch                         = new Search(array(6, 9, 3, 4, 1, 0, -7), 4);
+$canNotSearchErrorResult                                                              = new Search(array(1, 2, 3, 4, 5, 6, 7), 8);
+$firstArgumentErrorAndSecondArgumentCanNotSearchErrorResult                           = new Search(404, 8);
+$firstEmptyErrorAndSecondArgumentCanNotSearchErrorResult                              = new Search(array(), 8);
+$firstNotAscendingOrderOrDescendingOrderErrorAndSecondArgumentErrorResult             = new Search(array(6, 9, 3, 4, 1, 0, -7), array(4, 0, 4));
+$firstNotAscendingOrderOrDescendingOrderErrorAndSecondArgumentcanNotSearchErrorResult = new Search(array(6, 9, 3, 4, 1, 0, -7), 8);
+$otherSearchResult                                                                    = new Search(array(6, 9, 3, 4, 1, 0, -7), 4);
+$canNotSearchResult                                                                   = new Search(array(6, 9, 3, 4, 1, 0, -7), 8);
+$firstArgumentErrorResult                                                             = new Search(404, 4);
+$firstEmptyErrorResult                                                                = new Search(array(), 4);
+$secondArgumentErrorResult                                                            = new Search(array(6, 9, 3, 4, 1, 0, -7), array(4, 0, 4));
+$firstArgumentErrorAndSecondArgumentErrorResult                                       = new Search(404, array(4, 0, 4));
+$firstEmptyErrorAndSecondArgumentErrorResult                                          = new Search(array(), array(4, 0, 4));
+$notSetErrorResult                                                                    = new Search();
 
 // 結果出力
 // 線形探索法
@@ -215,7 +349,147 @@ $notSetErrorResult                                            = new Search();
 }
 
 // 2分探索法
-{}
+{
+  // 正常系: 指定されたデータの探索回数が返される 昇順
+  // echo($binarySearchToAscendingOrderResult->binarySearch());
+  /*
+  Binary Search
+
+  [4] << now data  1  search data >> [5]
+  [6] << now data  2  search data >> [5]
+  [5] << now data  3  search data >> [5]  matched! 
+
+  SUCCESS  
+  Search Count: 3
+  */
+
+  // 正常系: 指定されたデータの探索回数が返される 降順
+  // echo($binarySearchToDescendingOrderResult->binarySearch());
+  /*
+  Binary Search
+
+  [4] << now data  1  search data >> [6]
+  [5] << now data  2  search data >> [6]
+  [6] << now data  3  search data >> [6]  matched! 
+
+  SUCCESS        
+  Search Count: 3 
+  */
+
+  // 第1引数に配列以外をセットした場合のエラー
+  // echo($firstArgumentErrorResult->binarySearch());
+  /*
+  Binary Search
+
+  ERROR  : A value other than an array is specified in the first argument. Specify the array containing the elements in the first argument. 
+
+  */
+
+  // 第1引数に空配列をセットした場合のエラー
+  // echo($firstEmptyErrorResult->binarySearch());
+  /*
+  Binary Search
+
+  ERROR  : The contents of the array of the first argument is empty. set the element. 
+  ERROR  : An integer that is not included in the array of the first argument is specified in the second argument. Specify an integer contained in the array specified in the first argument.
+
+  */
+
+  // 第1引数に昇順か降順に並べられてない配列をセットした場合のエラー
+  // echo($notAscendingOrderOrDescendingOrderErrorResultForBinarySearch->binarySearch());
+  /*
+  Binary Search
+
+  ERROR  : An array that is not sorted in ascending or descending order is specified in the first argument. Specify an array that is sorted in ascending or descending order. 
+
+  */
+
+  // 第2引数に整数以外をセットした場合のエラー
+  // echo($secondArgumentErrorResult->binarySearch());
+  /*
+  Binary Search
+
+  ERROR  : An array that is not sorted in ascending or descending order is specified in the first argument. Specify an array that is sorted in ascending or descending order. 
+  ERROR  : A value other than an integer is specified in the second argument. Specify an integer. 
+
+  */
+
+  // 第2引数に第1引数の配列の中の整数が含まれていない整数をセットした場合のエラー
+  // echo($canNotSearchErrorResult->binarySearch());
+  /*
+  Binary Search
+
+  ERROR  : An integer that is not included in the array of the first argument is specified in the second argument. Specify an integer contained in the array specified in the first argument. 
+
+  */
+
+  // 第1引数に配列以外かつ第2引数に整数以外をセットした場合のエラー
+  // echo($firstArgumentErrorAndSecondArgumentErrorResult->binarySearch());
+  /*
+  Binary Search
+
+  ERROR  : A value other than an array is specified in the first argument. Specify the array containing the elements in the first argument. 
+  ERROR  : A value other than an integer is specified in the second argument. Specify an integer. 
+
+  */
+
+  // 第1引数に配列以外かつ第2引数に第1引数の配列の中の整数が含まれていない整数をセットした場合のエラー
+  // echo($firstArgumentErrorAndSecondArgumentCanNotSearchErrorResult->binarySearch());
+  /*
+  Binary Search
+
+  ERROR  : A value other than an array is specified in the first argument. Specify the array containing the elements in the first argument. 
+
+  */
+
+  // 第1引数に空配列かつ第2引数に整数以外をセットした場合のエラー
+  // echo($firstEmptyErrorAndSecondArgumentErrorResult->binarySearch());
+  /*
+  Binary Search
+
+  ERROR  : The contents of the array of the first argument is empty. set the element. 
+  ERROR  : A value other than an integer is specified in the second argument. Specify an integer. 
+
+  */
+
+  // 第1引数に空配列かつ第2引数に第1引数の配列の中の整数が含まれていない整数をセットした場合のエラー
+  // echo($firstEmptyErrorAndSecondArgumentCanNotSearchErrorResult->binarySearch());
+  /*
+  Binary Search
+
+  ERROR  : The contents of the array of the first argument is empty. set the element. 
+  ERROR  : An integer that is not included in the array of the first argument is specified in the second argument. Specify an integer contained in the array specified in the first argument. 
+
+  */
+
+  // 第1引数に昇順か降順に並べられてない配列かつ第2引数に整数以外をセットした場合のエラー
+  // echo($firstNotAscendingOrderOrDescendingOrderErrorAndSecondArgumentErrorResult->binarySearch());
+  /*
+  
+  ERROR  : An array that is not sorted in ascending or descending order is specified in the first argument. Specify an array that is sorted in ascending or descending order. 
+  ERROR  : A value other than an integer is specified in the second argument. Specify an integer. 
+
+  */
+
+  // 第1引数に昇順か降順に並べられてない配列かつ第2引数に第1引数の配列の中の整数が含まれていない整数をセットした場合のエラー
+  // echo($firstNotAscendingOrderOrDescendingOrderErrorAndSecondArgumentcanNotSearchErrorResult->binarySearch());
+  /*
+  Binary Search
+
+  ERROR  : An array that is not sorted in ascending or descending order is specified in the first argument. Specify an array that is sorted in ascending or descending order. 
+  ERROR  : An integer that is not included in the array of the first argument is specified in the second argument. Specify an integer contained in the array specified in the first argument. 
+
+  */
+
+  // 引数をセットしていない場合のエラー
+  // echo($notSetErrorResult->binarySearch());
+  /*
+  Linear Search
+
+  ERROR  : No value has been set. Set the array containing the value in the first argument and the you want to search integer in the second argument.
+
+  */
+}
 
 // ハッシュ表探索
 {}
