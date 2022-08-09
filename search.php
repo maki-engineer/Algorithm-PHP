@@ -14,17 +14,13 @@ class Search{
     return sprintf("\033[%dm %s \033[m", $c, $m);
   }
 
-  // 線形探索法
-  public function linearSearch(){
+  // エラー処理関数
+  private function errorMessage(){
     $array             = $this->array;
     $searchNum         = $this->searchNum;
-    $resultSearchCount = 0;
-    $resultBool        = false;
     $errorArray        = array();
 
-    echo("Linear Search\n");
-
-    // エラー処理
+    // 引数が渡されてるかどうか
     if(($array == "no data.") || ($searchNum == "no data.")){
       array_push($errorArray, ": No value has been set. Set the array containing the value in the first argument and the you want to search integer in the second argument.");
     }
@@ -49,6 +45,19 @@ class Search{
       }
     }
 
+    return $errorArray;
+  }
+
+  // 線形探索法
+  public function linearSearch(){
+    $array             = $this->array;
+    $searchNum         = $this->searchNum;
+    $resultSearchCount = 0;
+    $resultBool        = false;
+    $errorArray        = $this->errorMessage();
+
+    echo("Linear Search\n");
+
     // エラー出力
     if(!empty($errorArray)){
       echo("\n");
@@ -56,6 +65,8 @@ class Search{
       foreach($errorArray as $errorMessage){
         echo($this->cecho("ERROR", 41).$this->cecho($errorMessage, 31)."\n");
       }
+
+      echo("\n");
 
       return;
     }
@@ -117,7 +128,7 @@ $notSetErrorResult                                            = new Search();
 // 線形探索法
 {
   // 正常系: 指定されたデータの探索回数が返される
-  // echo($otherResult->linearSearch());
+  // echo($otherSearchResult->linearSearch());
   /*
   Linear Search
 
@@ -152,6 +163,7 @@ $notSetErrorResult                                            = new Search();
   Linear Search
 
   ERROR  : A value other than an array is specified in the first argument. Specify the array containing the elements in the first argument.
+
   */
 
   // 第1引数に空配列をセットした場合のエラー
@@ -160,6 +172,7 @@ $notSetErrorResult                                            = new Search();
   Linear Search
 
   ERROR  : The contents of the array of the first argument is empty. set the element.
+
   */
 
   // 第2引数に整数以外をセットした場合のエラー
@@ -168,6 +181,7 @@ $notSetErrorResult                                            = new Search();
   Linear Search
 
   ERROR  : A value other than an integer is specified in the second argument. Specify an integer.
+
   */
 
   // 第1引数に配列以外かつ第2引数に整数以外をセットした場合のエラー
@@ -177,6 +191,7 @@ $notSetErrorResult                                            = new Search();
 
   ERROR  : A value other than an array is specified in the first argument. Specify the array containing the elements in the first argument. 
   ERROR  : A value other than an integer is specified in the second argument. Specify an integer.
+
   */
 
   // 第1引数に空配列かつ第2引数に整数以外をセットした場合のエラー
@@ -184,8 +199,9 @@ $notSetErrorResult                                            = new Search();
   /*
   Linear Search
 
-  ERROR  : The contents of the array of the first argument is empty. set the element. 
-  ERROR  : A value other than an integer is specified in the second argument. Specify an integer. 
+  ERROR  : The contents of the array of the first argument is empty. set the element.
+  ERROR  : A value other than an integer is specified in the second argument. Specify an integer.
+
   */
 
   // 引数をセットしていない場合のエラー
@@ -194,6 +210,7 @@ $notSetErrorResult                                            = new Search();
   Linear Search
 
   ERROR  : No value has been set. Set the array containing the value in the first argument and the you want to search integer in the second argument.
+
   */
 }
 
