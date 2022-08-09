@@ -242,10 +242,61 @@ class Search{
   }
 
   // ハッシュ表探索
-  public function HashTableSearch(){}
+  public function hashTableSearch(){
+    $array             = $this->array;
+    $searchNum         = $this->searchNum;
+    $resultSearchCount = 1;
+    $resultBool        = false;
+    $errorArray        = $this->errorMessage();
+
+    echo("Hash Table Search\n");
+
+    // エラー出力
+    if(!empty($errorArray)){
+      echo("\n");
+
+      foreach($errorArray as $errorMessage){
+        echo($this->cecho("ERROR", 41).$this->cecho($errorMessage, 31)."\n");
+      }
+
+      echo("\n");
+
+      return;
+    }
+
+    // 探索実行
+
+    if(count($array) != 10){
+      echo("\n");
+      return $this->cecho("ERROR", 41).": The number of elements in the array of the first argument is not 10. To use the hash table search function, specify an array with 10 elements as the first argument."."\n\n";
+    }
+
+    $hashNum = ($searchNum % 10) + 1;
+    if($hashNum == 10){
+      $hashNum = 0;
+    }
+
+    sleep(2);
+
+    if($array[$hashNum] == $searchNum){
+      $resultBool =true;
+      echo("\n[".$array[$hashNum]."] << now data  ".$resultSearchCount."  search data >> [".$searchNum."] ".$this->cecho("matched!", 32));
+    }else{
+      echo("\n[".$array[$hashNum]."] << now data  ".$resultSearchCount."  search data >> [".$searchNum."]");
+    }
+
+    // 結果表示
+    sleep(2);
+
+    if($resultBool){
+      return "\n\n".$this->cecho("SUCCESS", 42).$this->cecho("\nSearch Count: ".$resultSearchCount, 32);
+    }else{
+      return "\n\n".$this->cecho("No value was specified.", 43);
+    }
+  }
 
   // オープンアドレス法
-  public function OpenAddress(){}
+  public function openAddress(){}
 
   // ハッシュチェイン法
   public function hashChain(){}
@@ -258,6 +309,10 @@ $notAscendingOrderOrDescendingOrderErrorResultForBinarySearch             = new 
 $canNotSearchResultForBinarySearchToAscendingOrder                        = new Search(array(1, 2, 3, 4, 5, 6, 7), 8);
 $canNotSearchResultForBinarySearchToDescendingOrder                       = new Search(array(7, 6, 5, 4, 3, 2, 1), 8);
 $firstNotAscendingOrderOrDescendingOrderErrorAndSecondArgumentErrorResult = new Search(array(6, 9, 3, 4, 1, 0, -7), array(4, 0, 4));
+$hashTableSearchResult                                                    = new Search(array(19, 120, 961, 72, 283, 404, 765, 346, 27, 88), 765);
+$canNotSearchResultFotHashTableSearch                                     = new Search(array(19, 120, 961, 72, 283, 404, 765, 346, 27, 88), 43);
+$notTenErrorResultFotHashTableSearch                                      = new Search(array(6, 9, 3, 4, 1, 0, -7), 4);
+$firstArgumentNotTenErrorAndSecondArgumentErrorResult                     = new Search(array(6, 9, 3, 4, 1, 0, -7), array(4, 0, 4));
 $otherSearchResult                                                        = new Search(array(6, 9, 3, 4, 1, 0, -7), 4);
 $canNotSearchResult                                                       = new Search(array(6, 9, 3, 4, 1, 0, -7), 8);
 $firstArgumentErrorResult                                                 = new Search(404, 4);
@@ -495,7 +550,102 @@ $notSetErrorResult                                                        = new 
 }
 
 // ハッシュ表探索
-{}
+{
+  // 正常系: 指定されたデータの探索回数が返される
+  // echo($hashTableSearchResult->hashTableSearch());
+  /*
+  Hash Table Search
+
+  [19] << now data  1  search data >> [19]  matched! 
+
+  SUCCESS  
+  Search Count: 1
+  */
+
+  // 正常系: 指定されたデータが見つからなかった時はメッセージのみが返される
+  // echo($canNotSearchResultFotHashTableSearch->hashTableSearch());
+  /*
+  Hash Table Search
+
+  [283] << now data  1  search data >> [43]
+
+  No value was specified. 
+  */
+
+  // 第1引数に配列以外をセットした場合のエラー
+  // echo($firstArgumentErrorResult->hashTableSearch());
+  /*
+  Hash Table Search
+
+  ERROR  : A value other than an array is specified in the first argument. Specify the array containing the elements in the first argument. 
+
+  */
+
+  // 第1引数に空配列をセットした場合のエラー
+  // echo($firstEmptyErrorResult->hashTableSearch());
+  /*
+  Hash Table Search
+
+  ERROR  : The contents of the array of the first argument is empty. set the element. 
+
+  */
+
+  // 第1引数の配列の個数が10個じゃなかった場合のエラー
+  // echo($notTenErrorResultFotHashTableSearch->hashTableSearch());
+  /*
+  Hash Table Search
+
+  ERROR : The number of elements in the array of the first argument is not 10. To use the hash table search function, specify an array with 10 elements as the first argument.
+
+  */
+
+  // 第2引数に整数以外をセットした場合のエラー
+  // echo($secondArgumentErrorResult->hashTableSearch());
+  /*
+  Hash Table Search
+
+  ERROR  : A value other than an integer is specified in the second argument. Specify an integer. 
+
+  */
+
+  // 第1引数に配列以外かつ第2引数に整数以外をセットした場合のエラー
+  // echo($firstArgumentErrorAndSecondArgumentErrorResult->hashTableSearch());
+  /*
+  Hash Table Search
+
+  ERROR  : A value other than an array is specified in the first argument. Specify the array containing the elements in the first argument. 
+  ERROR  : A value other than an integer is specified in the second argument. Specify an integer. 
+
+  */
+
+  // 第1引数に空配列かつ第2引数に整数以外をセットした場合のエラー
+  // echo($firstEmptyErrorAndSecondArgumentErrorResult->hashTableSearch());
+  /*
+  Hash Table Search
+
+  ERROR  : The contents of the array of the first argument is empty. set the element. 
+  ERROR  : A value other than an integer is specified in the second argument. Specify an integer. 
+
+  */
+
+  // 第1引数の配列の個数が10個じゃないかつ第2引数に整数以外をセットした場合のエラー
+  // echo($firstArgumentNotTenErrorAndSecondArgumentErrorResult->hashTableSearch());
+  /*
+  Hash Table Search
+
+  ERROR  : A value other than an integer is specified in the second argument. Specify an integer. 
+
+  */
+
+  // 引数をセットしていない場合のエラー
+  // echo($notSetErrorResult->hashTableSearch());
+  /*
+  Linear Search
+
+  ERROR  : No value has been set. Set the array containing the value in the first argument and the you want to search integer in the second argument.
+
+  */
+}
 
 // オープンアドレス法
 {}
