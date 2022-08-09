@@ -20,7 +20,7 @@ class Sort{
     $sortOrderSelection = $this->sortOrderSelection;
     $errorArray         = array();
 
-    // エラー処理
+    // 引数が渡されてるかどうか
     if(($array == "no data.") || ($sortOrderSelection == "no data.")){
       array_push($errorArray, ": No value has been set. Set the array containing the value in the first argument and the specify integer of 0 or 1 in the second argument.");
     }
@@ -71,46 +71,6 @@ class Sort{
 
       return;
     }
-
-    // エラー処理
-    /*if(($array == "no data.") || ($sortOrderSelection == "no data.")){
-      array_push($errorArray, ": No value has been set. Set the array containing the value in the first argument and the specify integer of 0 or 1 in the second argument.");
-    }
-
-    // 第1引数のエラー処理
-    {
-      // 配列かチェック
-      if(($array != "no data.") && (!is_array($array))){
-        array_push($errorArray, ": A value other than an array is specified in the first argument. Specify the array containing the elements in the first argument.");
-      }
-      // 空チェック
-      if(empty($array)){
-        array_push($errorArray, ": The contents of the array of the first argument is empty. set the element.");
-      }
-    }
-
-    // 第2引数のエラー処理
-    {
-      // 整数かチェック
-      if(($sortOrderSelection != "no data.") && (!is_int($sortOrderSelection))){
-        array_push($errorArray, ": A value other than an integer is specified in the second argument. Specify integer of 0 or 1 for the second argument.");
-      }
-      // 0か1のどっちかかチェック
-      if((is_int($sortOrderSelection)) && ($sortOrderSelection > 1)){
-        array_push($errorArray, ": An integer other than 0 or 1 is specified in the second argument. Specify integer of 0 or 1 for the second argument.");
-      }
-    }
-
-    // エラー出力
-    if(!empty($errorArray)){
-      echo("\n\n");
-
-      foreach($errorArray as $errorMessage){
-        echo($this->cecho("ERROR", 41).$this->cecho($errorMessage, 31)."\n");
-      }
-
-      return;
-    }*/
 
     // 0が昇順、1が降順、それ以外はエラー
     if($sortOrderSelection == 0){
