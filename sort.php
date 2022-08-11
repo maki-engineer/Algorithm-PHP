@@ -138,7 +138,6 @@ class Sort{
     $array              = $this->array;
     $sortOrderSelection = $this->sortOrderSelection;
     $resultCount        = 0;
-    $resultArray        = array();
     $errorArray         = $this->errorMessage();
 
     echo("Selection Sort");
@@ -161,32 +160,84 @@ class Sort{
     if($sortOrderSelection == 0){
       echo("\nto Ascending Order...\n\n");
 
-      while(!empty($array)){
-        array_push($resultArray, min($array));
-        $minNumIndex = array_search(min($array), $array);
-        unset($array[$minNumIndex]);
-        $resultCount++;
+      $count = 0;
 
-        sleep(2);
-        echo("[".implode(", ", $resultArray)."] >> ".$resultCount."\n");
+      while($count != count($array)){
+        $isExchange = false;
+
+        for($i = $count; $i < count($array); $i++){
+          if($count == count($array) - 1){
+            break;
+          }
+
+          if($i == $count){
+            $minNum      = $array[$i];
+            $minNumIndex = $i;
+          }else{
+            if($minNum > $array[$i]){
+              $isExchange  = true;
+              $minNum      = $array[$i];
+              $minNumIndex = $i;
+            }
+          }
+        }
+
+        // 交換
+        if($isExchange){
+          $exchange            = $array[$resultCount];
+          $array[$resultCount] = $array[$minNumIndex];
+          $array[$minNumIndex] = $exchange;
+          $resultCount++;
+
+          sleep(2);
+          echo("[".implode(", ", $array)."] >> ".$resultCount."\n");
+        }
+
+        $count++;
       }
     }else{
       echo("\nto Descending Order...\n\n");
 
-      while(!empty($array)){
-        array_push($resultArray, max($array));
-        $maxNumIndex = array_search(max($array), $array);
-        unset($array[$maxNumIndex]);
-        $resultCount++;
+      $count = 0;
 
-        sleep(2);
-        echo("[".implode(", ", $resultArray)."] >> ".$resultCount."\n");
+      while($count != count($array)){
+        $isExchange = false;
+
+        for($i = $count; $i < count($array); $i++){
+          if($count == count($array) - 1){
+            break;
+          }
+
+          if($i == $count){
+            $maxNum      = $array[$i];
+            $maxNumIndex = $i;
+          }else{
+            if($maxNum < $array[$i]){
+              $isExchange  = true;
+              $maxNum      = $array[$i];
+              $maxNumIndex = $i;
+            }
+          }
+        }
+
+        // 交換
+        if($isExchange){
+          $exchange            = $array[$resultCount];
+          $array[$resultCount] = $array[$maxNumIndex];
+          $array[$maxNumIndex] = $exchange;
+          $resultCount++;
+
+          sleep(2);
+          echo("[".implode(", ", $array)."] >> ".$resultCount."\n");
+        }
+
+        $count++;
       }
     }
 
     // 結果表示
     sleep(2);
-    return "\n".$this->cecho("SUCCESS", 42).$this->cecho("\nSort Count: ".$resultCount, 32).$this->cecho("\nResult: [".implode(", ", $resultArray)."]", 32);
+    return "\n".$this->cecho("SUCCESS", 42).$this->cecho("\nSort Count: ".$resultCount, 32).$this->cecho("\nResult: [".implode(", ", $array)."]", 32);
   }
 
   // 挿入ソート
@@ -392,20 +443,16 @@ $notSetErrorResult                                   = new Sort();
   // 正常系:渡された配列を昇順にする
   // echo($ascendingOrderResult->selectionSort());
   /*
-  Selection Sort       
+  Selection Sort
   to Ascending Order...
 
-  [-5] >> 1
-  [-5, 1] >> 2
-  [-5, 1, 2] >> 3
-  [-5, 1, 2, 2] >> 4
-  [-5, 1, 2, 2, 3] >> 5
-  [-5, 1, 2, 2, 3, 4] >> 6
-  [-5, 1, 2, 2, 3, 4, 5] >> 7
-  [-5, 1, 2, 2, 3, 4, 5, 6] >> 8
+  [-5, 6, 5, 1, 3, 4, 2, 2] >> 1
+  [-5, 1, 5, 6, 3, 4, 2, 2] >> 2
+  [-5, 1, 2, 6, 3, 4, 5, 2] >> 3
+  [-5, 1, 2, 2, 3, 4, 5, 6] >> 4
 
   SUCCESS  
-  Sort Count: 8
+  Sort Count: 4
   Result: [-5, 1, 2, 2, 3, 4, 5, 6]
   */
 
@@ -415,17 +462,15 @@ $notSetErrorResult                                   = new Sort();
   Selection Sort
   to Descending Order...
 
-  [6] >> 1
-  [6, 5] >> 2
-  [6, 5, 4] >> 3
-  [6, 5, 4, 3] >> 4
-  [6, 5, 4, 3, 2] >> 5
-  [6, 5, 4, 3, 2, 2] >> 6
-  [6, 5, 4, 3, 2, 2, 1] >> 7
-  [6, 5, 4, 3, 2, 2, 1, -5] >> 8
+  [6, 2, 5, 1, 3, 4, 2, -5] >> 1
+  [6, 5, 2, 1, 3, 4, 2, -5] >> 2
+  [6, 5, 4, 1, 3, 2, 2, -5] >> 3
+  [6, 5, 4, 3, 1, 2, 2, -5] >> 4
+  [6, 5, 4, 3, 2, 1, 2, -5] >> 5
+  [6, 5, 4, 3, 2, 2, 1, -5] >> 6
 
   SUCCESS  
-  Sort Count: 8
+  Sort Count: 6
   Result: [6, 5, 4, 3, 2, 2, 1, -5]
   */
 
