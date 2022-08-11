@@ -156,11 +156,11 @@ class Sort{
     }
 
     // ソート実行
+    $count = 0;
+
     // 0が昇順、1が降順
     if($sortOrderSelection == 0){
       echo("\nto Ascending Order...\n\n");
-
-      $count = 0;
 
       while($count != count($array)){
         $isExchange = false;
@@ -197,8 +197,6 @@ class Sort{
       }
     }else{
       echo("\nto Descending Order...\n\n");
-
-      $count = 0;
 
       while($count != count($array)){
         $isExchange = false;
@@ -242,16 +240,133 @@ class Sort{
 
   // 挿入ソート
   public function insertionSort(){
-    $array = $this->array;
+    $array              = $this->array;
+    $sortOrderSelection = $this->sortOrderSelection;
+    $resultCount        = 0;
+    $errorArray         = $this->errorMessage();
+
+    echo("Insertion Sort");
+
+    // エラー出力
+    if(!empty($errorArray)){
+      echo("\n\n");
+
+      foreach($errorArray as $errorMessage){
+        echo($this->cecho("ERROR", 41).$this->cecho($errorMessage, 31)."\n");
+      }
+
+      echo("\n");
+
+      return;
+    }
+
+    // ソート実行
+    $minNumIndex = 0;
 
     // 0が昇順、1が降順
-    if($this->sortOrderSelection == 0){
-      return $array;
-    }elseif($this->sortOrderSelection == 1){
-      return $array;
+    if($sortOrderSelection == 0){
+      echo("\nto Ascending Order...\n\n");
+
+      for($rightI = 1; $rightI < count($array); $rightI++){
+        $isExchange = false;
+
+        for($leftI = $rightI - 1; $leftI > -1; $leftI--){
+          if($rightI == 1){
+            if($array[$leftI] > $array[$rightI]){
+              $resultCount++;
+              $exchange   = $array[$leftI];
+              $array[$leftI] = $array[$rightI];
+              $array[$rightI]  = $exchange;
+
+              sleep(2);
+              echo("[".implode(", ", $array)."] >> ".$resultCount."\n");
+            }
+          }else{
+            if($leftI == $rightI - 1){
+              if($array[$leftI] < $array[$rightI]){
+                break;
+              }else{
+                $minNumIndex = $leftI;
+              }
+            }else{
+              if($array[$leftI] < $array[$rightI]){
+                $resultCount++;
+                array_splice($array, $minNumIndex, 0, $array[$rightI]);
+                array_splice($array, $rightI + 1, 1);
+
+                sleep(2);
+                echo("[".implode(", ", $array)."] >> ".$resultCount."\n");
+                break;
+              }else{
+                $minNumIndex = $leftI;
+
+                if($minNumIndex == 0){
+                  $resultCount++;
+                  array_splice($array, $minNumIndex, 0, $array[$rightI]);
+                  array_splice($array, $rightI + 1, 1);
+
+                  sleep(2);
+                  echo("[".implode(", ", $array)."] >> ".$resultCount."\n");
+                }
+              }
+            }
+          }
+        }
+      }
     }else{
-      return "ERROR: Specify 0 or 1 for the second argument.";
+      echo("\nto Descending Order...\n\n");
+
+      for($rightI = 1; $rightI < count($array); $rightI++){
+        $isExchange = false;
+
+        for($leftI = $rightI - 1; $leftI > -1; $leftI--){
+          if($rightI == 1){
+            if($array[$leftI] < $array[$rightI]){
+              $resultCount++;
+              $exchange   = $array[$leftI];
+              $array[$leftI] = $array[$rightI];
+              $array[$rightI]  = $exchange;
+
+              sleep(2);
+              echo("[".implode(", ", $array)."] >> ".$resultCount."\n");
+            }
+          }else{
+            if($leftI == $rightI - 1){
+              if($array[$leftI] > $array[$rightI]){
+                break;
+              }else{
+                $minNumIndex = $leftI;
+              }
+            }else{
+              if($array[$leftI] > $array[$rightI]){
+                $resultCount++;
+                array_splice($array, $minNumIndex, 0, $array[$rightI]);
+                array_splice($array, $rightI + 1, 1);
+
+                sleep(2);
+                echo("[".implode(", ", $array)."] >> ".$resultCount."\n");
+                break;
+              }else{
+                $minNumIndex = $leftI;
+
+                if($minNumIndex == 0){
+                  $resultCount++;
+                  array_splice($array, $minNumIndex, 0, $array[$rightI]);
+                  array_splice($array, $rightI + 1, 1);
+
+                  sleep(2);
+                  echo("[".implode(", ", $array)."] >> ".$resultCount."\n");
+                }
+              }
+            }
+          }
+        }
+      }
     }
+
+    // 結果表示
+    sleep(2);
+    return "\n".$this->cecho("SUCCESS", 42).$this->cecho("\nSort Count: ".$resultCount, 32).$this->cecho("\nResult: [".implode(", ", $array)."]", 32);
   }
 
   // シェルソート
@@ -473,95 +588,45 @@ $notSetErrorResult                                   = new Sort();
   Sort Count: 6
   Result: [6, 5, 4, 3, 2, 2, 1, -5]
   */
-
-  // 第1引数に配列以外をセットした場合のエラー
-  // echo($firstArgumentErrorResult->selectionSort());
-  /*
-  Selection Sort
-
-  ERROR: A value other than an array is specified in the first argument. Specify the array containing the elements in the first argument.
-
-  */
-
-  // 第1引数に空の配列をセットした場合のエラー
-  // echo($firstEmptyErrorResult->selectionSort());
-  /*
-  Selection Sort
-
-  ERROR: The contents of the array of the first argument is empty. set the element.
-
-  */
-
-  // 第2引数に整数以外をセットした場合のエラー
-  // echo($secondArgumentErrorResult->selectionSort());
-  /*
-  Selection Sort
-
-  ERROR: A value other than an integer is specified in the second argument. Specify 0 or 1 for the second argument.
-
-  */
-
-  // 第2引数に0と1以外をセットした場合のエラー
-  // echo($secondNotZeroAndOneErrorResult->selectionSort());
-  /*
-  Selection Sort
-
-  ERROR: An integer other than 0 or 1 is specified in the second argument. Specify integer of 0 or 1 for the second argument.
-
-  */
-
-  // 第1引数に配列以外かつ第2引数に整数以外をセットした場合のエラー
-  // echo($firstArgumentErrorAndSecondArgumentErrorResult->selectionSort());
-  /*
-  Selection Sort
-
-  ERROR: A value other than an array is specified in the first argument. Specify the array containing the elements in the first argument.
-  ERROR: A value other than an integer is specified in the second argument. Specify integer of 0 or 1 for the second argument.
-
-  */
-
-  // 第1引数に配列以外かつ第2引数に0か1以外をセットした場合のエラー
-  // echo($firstArgumentErrorAndSecondNotZeroAndOneErrorResult->selectionSort());
-  /*
-  Selection Sort
-
-  ERROR: A value other than an array is specified in the first argument. Specify the array containing the elements in the first argument.
-  ERROR: An integer other than 0 or 1 is specified in the second argument. Specify integer of 0 or 1 for the second argument.
-
-  */
-
-  // 第1引数に空配列かつ第2引数に整数以外をセットした場合のエラー
-  // echo($firstEmptyErrorAndSecondArgumentErrorResult->selectionSort());
-  /*
-  Selection Sort
-
-  ERROR: The contents of the array of the first argument is empty. set the element.
-  ERROR: A value other than an integer is specified in the second argument. Specify integer of 0 or 1 for the second argument.
-
-  */
-
-  // 第1引数に空配列かつ第2引数に0か1以外をセットした場合のエラー
-  // echo($firstEmptyErrorAndSecondNotZeroAndOneErrorResult->selectionSort());
-  /*
-  Selection Sort
-
-  ERROR: The contents of the array of the first argument is empty. set the element.
-  ERROR: An integer other than 0 or 1 is specified in the second argument. Specify integer of 0 or 1 for the second argument.
-
-  */
-
-  // 引数をセットしていない場合のエラー
-  // echo($notSetErrorResult->selectionSort());
-  /*
-  Selection Sort
-
-  ERROR: No value has been set. Set the array containing the value in the first argument and the specify integer of 0 or 1 in the second argument.
-
-  */
 }
 
 // 挿入ソート
-{}
+{
+  // 正常系:渡された配列を昇順にする
+  // echo($ascendingOrderResult->insertionSort());
+  /*
+  Insertion Sort
+  to Ascending Order...
+
+  [2, 5, 6, 1, 3, 4, 2, -5] >> 1
+  [1, 2, 5, 6, 3, 4, 2, -5] >> 2
+  [1, 2, 3, 5, 6, 4, 2, -5] >> 3
+  [1, 2, 3, 4, 5, 6, 2, -5] >> 4
+  [1, 2, 2, 3, 4, 5, 6, -5] >> 5
+  [-5, 1, 2, 2, 3, 4, 5, 6] >> 6
+
+  SUCCESS  
+  Sort Count: 6
+  Result: [-5, 1, 2, 2, 3, 4, 5, 6]
+  */
+
+  // 正常系:渡された配列を降順にする
+  // echo($descendingOrderResult->insertionSort());
+  /*
+  Insertion Sort
+  to Descending Order...
+
+  [6, 2, 5, 1, 3, 4, 2, -5] >> 1
+  [6, 5, 2, 1, 3, 4, 2, -5] >> 2
+  [6, 5, 3, 2, 1, 4, 2, -5] >> 3
+  [6, 5, 4, 3, 2, 1, 2, -5] >> 4
+  [6, 5, 4, 3, 2, 2, 1, -5] >> 5
+
+  SUCCESS  
+  Sort Count: 5
+  Result: [6, 5, 4, 3, 2, 2, 1, -5]
+  */
+}
 
 // シェルソート
 {}
