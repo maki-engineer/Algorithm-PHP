@@ -303,58 +303,28 @@ class Search{
 }
 
 // クラス生成
-$binarySearchToAscendingOrderResult                                       = new Search(array(1, 2, 3, 4, 5, 6, 7), 5);
-$binarySearchToDescendingOrderResult                                      = new Search(array(7, 6, 5, 4, 3, 2, 1), 6);
-$notAscendingOrderOrDescendingOrderErrorResultForBinarySearch             = new Search(array(6, 9, 3, 4, 1, 0, -7), 4);
-$canNotSearchResultForBinarySearchToAscendingOrder                        = new Search(array(1, 2, 3, 4, 5, 6, 7), 8);
-$canNotSearchResultForBinarySearchToDescendingOrder                       = new Search(array(7, 6, 5, 4, 3, 2, 1), 8);
-$firstNotAscendingOrderOrDescendingOrderErrorAndSecondArgumentErrorResult = new Search(array(6, 9, 3, 4, 1, 0, -7), array(4, 0, 4));
-$hashTableSearchResult                                                    = new Search(array(19, 120, 961, 72, 283, 404, 765, 346, 27, 88), 765);
-$canNotSearchResultFotHashTableSearch                                     = new Search(array(19, 120, 961, 72, 283, 404, 765, 346, 27, 88), 43);
-$notTenErrorResultFotHashTableSearch                                      = new Search(array(6, 9, 3, 4, 1, 0, -7), 4);
-$firstArgumentNotTenErrorAndSecondArgumentErrorResult                     = new Search(array(6, 9, 3, 4, 1, 0, -7), array(4, 0, 4));
-$otherSearchResult                                                        = new Search(array(6, 9, 3, 4, 1, 0, -7), 4);
-$canNotSearchResult                                                       = new Search(array(6, 9, 3, 4, 1, 0, -7), 8);
-$firstArgumentErrorResult                                                 = new Search(404, 4);
-$firstEmptyErrorResult                                                    = new Search(array(), 4);
-$secondArgumentErrorResult                                                = new Search(array(6, 9, 3, 4, 1, 0, -7), array(4, 0, 4));
-$firstArgumentErrorAndSecondArgumentErrorResult                           = new Search(404, array(4, 0, 4));
-$firstEmptyErrorAndSecondArgumentErrorResult                              = new Search(array(), array(4, 0, 4));
-$notSetErrorResult                                                        = new Search();
+$binarySearchToAscendingOrderResult                                               = new Search(array(1, 2, 3, 4, 5, 6, 7), 5);
+$binarySearchToDescendingOrderResult                                              = new Search(array(7, 6, 5, 4, 3, 2, 1), 6);
+$firstArgumentNotAscendingOrderOrDescendingOrderErrorResultForBinarySearch        = new Search(array(6, 9, 3, 4, 1, 0, -7), 4);
+$firstArgumentNotAscendingOrderOrDescendingOrderErrorAndSecondArgumentErrorResult = new Search(array(6, 9, 3, 4, 1, 0, -7), array(4, 0, 4));
+$canNotSearchResultForBinarySearchToAscendingOrder                                = new Search(array(1, 2, 3, 4, 5, 6, 7), 8);
+$canNotSearchResultForBinarySearchToDescendingOrder                               = new Search(array(7, 6, 5, 4, 3, 2, 1), 8);
+$hashTableSearchResult                                                            = new Search(array(19, 120, 961, 72, 283, 404, 765, 346, 27, 88), 765);
+$canNotSearchResultFotHashTableSearch                                             = new Search(array(19, 120, 961, 72, 283, 404, 765, 346, 27, 88), 43);
+$notTenErrorResultFotHashTableSearch                                              = new Search(array(6, 9, 3, 4, 1, 0, -7), 4);
+$firstArgumentNotTenErrorAndSecondArgumentErrorResult                             = new Search(array(6, 9, 3, 4, 1, 0, -7), array(4, 0, 4));
+$otherSearchResult                                                                = new Search(array(6, 9, 3, 4, 1, 0, -7), 4);
+$canNotSearchResult                                                               = new Search(array(6, 9, 3, 4, 1, 0, -7), 8);
+$firstArgumentErrorResult                                                         = new Search(404, 4);
+$firstEmptyErrorResult                                                            = new Search(array(), 4);
+$secondArgumentErrorResult                                                        = new Search(array(6, 9, 3, 4, 1, 0, -7), array(4, 0, 4));
+$firstArgumentErrorAndSecondArgumentErrorResult                                   = new Search(404, array(4, 0, 4));
+$firstEmptyErrorAndSecondArgumentErrorResult                                      = new Search(array(), array(4, 0, 4));
+$notSetErrorResult                                                                = new Search();
 
 // 結果出力
-// 線形探索法
+// エラーパターン
 {
-  // 正常系: 指定されたデータの探索回数が返される
-  // echo($otherSearchResult->linearSearch());
-  /*
-  Linear Search
-
-  [6] << now data  1  search data >> [4]
-  [9] << now data  2  search data >> [4]
-  [3] << now data  3  search data >> [4]
-  [4] << now data  4  search data >> [4]  matched!
-
-  SUCCESS        
-  Search Count: 4 
-  */
-
-  // 正常系: 指定されたデータが見つからなかった時はメッセージのみが返される
-  // echo($canNotSearchResult->linearSearch());
-  /*
-  Linear Search
-
-  [6] << now data  1  search data >> [8]
-  [9] << now data  2  search data >> [8]
-  [3] << now data  3  search data >> [8]
-  [4] << now data  4  search data >> [8]
-  [1] << now data  5  search data >> [8]
-  [0] << now data  6  search data >> [8]
-  [-7] << now data  7  search data >> [8]
-
-  No value was specified. 
-  */
-
   // 第1引数に配列以外をセットした場合のエラー
   // echo($firstArgumentErrorResult->linearSearch());
   /*
@@ -412,6 +382,39 @@ $notSetErrorResult                                                        = new 
   */
 }
 
+// 線形探索法
+{
+  // 正常系: 指定されたデータの探索回数が返される
+  // echo($otherSearchResult->linearSearch());
+  /*
+  Linear Search
+
+  [6] << now data  1  search data >> [4]
+  [9] << now data  2  search data >> [4]
+  [3] << now data  3  search data >> [4]
+  [4] << now data  4  search data >> [4]  matched!
+
+  SUCCESS        
+  Search Count: 4 
+  */
+
+  // 正常系: 指定されたデータが見つからなかった時はメッセージのみが返される
+  // echo($canNotSearchResult->linearSearch());
+  /*
+  Linear Search
+
+  [6] << now data  1  search data >> [8]
+  [9] << now data  2  search data >> [8]
+  [3] << now data  3  search data >> [8]
+  [4] << now data  4  search data >> [8]
+  [1] << now data  5  search data >> [8]
+  [0] << now data  6  search data >> [8]
+  [-7] << now data  7  search data >> [8]
+
+  No value was specified. 
+  */
+}
+
 // 2分探索法
 {
   // 正常系: 指定されたデータの探索回数が返される 昇順
@@ -463,88 +466,22 @@ $notSetErrorResult                                                        = new 
   No value was specified. 
   */
 
-  // 第1引数に配列以外をセットした場合のエラー
-  // echo($firstArgumentErrorResult->binarySearch());
-  /*
-  Binary Search
-
-  ERROR  : A value other than an array is specified in the first argument. Specify the array containing the elements in the first argument. 
-
-  */
-
-  // 第1引数に空配列をセットした場合のエラー
-  // echo($firstEmptyErrorResult->binarySearch());
-  /*
-  Binary Search
-
-  ERROR  : The contents of the array of the first argument is empty. set the element. 
-  ERROR  : An integer that is not included in the array of the first argument is specified in the second argument. Specify an integer contained in the array specified in the first argument.
-
-  */
-
   // 第1引数に昇順か降順に並べられてない配列をセットした場合のエラー
-  // echo($notAscendingOrderOrDescendingOrderErrorResultForBinarySearch->binarySearch());
+  // echo($firstArgumentNotAscendingOrderOrDescendingOrderErrorResultForBinarySearch->binarySearch());
   /*
   Binary Search
 
   ERROR  : An array that is not sorted in ascending or descending order is specified in the first argument. Specify an array that is sorted in ascending or descending order. 
-
-  */
-
-  // 第2引数に整数以外をセットした場合のエラー
-  // echo($secondArgumentErrorResult->binarySearch());
-  /*
-  Binary Search
-
-  ERROR  : An array that is not sorted in ascending or descending order is specified in the first argument. Specify an array that is sorted in ascending or descending order. 
-  ERROR  : A value other than an integer is specified in the second argument. Specify an integer. 
-
-  */
-
-  // 第1引数に配列以外かつ第2引数に整数以外をセットした場合のエラー
-  // echo($firstArgumentErrorAndSecondArgumentErrorResult->binarySearch());
-  /*
-  Binary Search
-
-  ERROR  : A value other than an array is specified in the first argument. Specify the array containing the elements in the first argument. 
-  ERROR  : A value other than an integer is specified in the second argument. Specify an integer. 
-
-  */
-
-  // 第1引数に空配列かつ第2引数に整数以外をセットした場合のエラー
-  // echo($firstEmptyErrorAndSecondArgumentErrorResult->binarySearch());
-  /*
-  Binary Search
-
-  ERROR  : The contents of the array of the first argument is empty. set the element. 
-  ERROR  : A value other than an integer is specified in the second argument. Specify an integer. 
-
-  */
-
-  // 第1引数に空配列かつ第2引数に第1引数の配列の中の整数が含まれていない整数をセットした場合のエラー
-  // echo($firstEmptyErrorAndSecondArgumentCanNotSearchErrorResult->binarySearch());
-  /*
-  Binary Search
-
-  ERROR  : The contents of the array of the first argument is empty. set the element. 
-  ERROR  : An integer that is not included in the array of the first argument is specified in the second argument. Specify an integer contained in the array specified in the first argument. 
 
   */
 
   // 第1引数に昇順か降順に並べられてない配列かつ第2引数に整数以外をセットした場合のエラー
-  // echo($firstNotAscendingOrderOrDescendingOrderErrorAndSecondArgumentErrorResult->binarySearch());
+  // echo($firstArgumentNotAscendingOrderOrDescendingOrderErrorAndSecondArgumentErrorResult->binarySearch());
   /*
-  
+  Binary Search
+
   ERROR  : An array that is not sorted in ascending or descending order is specified in the first argument. Specify an array that is sorted in ascending or descending order. 
-  ERROR  : A value other than an integer is specified in the second argument. Specify an integer. 
-  */
-
-  // 引数をセットしていない場合のエラー
-  // echo($notSetErrorResult->binarySearch());
-  /*
-  Linear Search
-
-  ERROR  : No value has been set. Set the array containing the value in the first argument and the you want to search integer in the second argument.
+  ERROR  : A value other than an integer is specified in the second argument. Specify an integer.  
 
   */
 }
@@ -572,24 +509,6 @@ $notSetErrorResult                                                        = new 
   No value was specified. 
   */
 
-  // 第1引数に配列以外をセットした場合のエラー
-  // echo($firstArgumentErrorResult->hashTableSearch());
-  /*
-  Hash Table Search
-
-  ERROR  : A value other than an array is specified in the first argument. Specify the array containing the elements in the first argument. 
-
-  */
-
-  // 第1引数に空配列をセットした場合のエラー
-  // echo($firstEmptyErrorResult->hashTableSearch());
-  /*
-  Hash Table Search
-
-  ERROR  : The contents of the array of the first argument is empty. set the element. 
-
-  */
-
   // 第1引数の配列の個数が10個じゃなかった場合のエラー
   // echo($notTenErrorResultFotHashTableSearch->hashTableSearch());
   /*
@@ -599,50 +518,12 @@ $notSetErrorResult                                                        = new 
 
   */
 
-  // 第2引数に整数以外をセットした場合のエラー
-  // echo($secondArgumentErrorResult->hashTableSearch());
-  /*
-  Hash Table Search
-
-  ERROR  : A value other than an integer is specified in the second argument. Specify an integer. 
-
-  */
-
-  // 第1引数に配列以外かつ第2引数に整数以外をセットした場合のエラー
-  // echo($firstArgumentErrorAndSecondArgumentErrorResult->hashTableSearch());
-  /*
-  Hash Table Search
-
-  ERROR  : A value other than an array is specified in the first argument. Specify the array containing the elements in the first argument. 
-  ERROR  : A value other than an integer is specified in the second argument. Specify an integer. 
-
-  */
-
-  // 第1引数に空配列かつ第2引数に整数以外をセットした場合のエラー
-  // echo($firstEmptyErrorAndSecondArgumentErrorResult->hashTableSearch());
-  /*
-  Hash Table Search
-
-  ERROR  : The contents of the array of the first argument is empty. set the element. 
-  ERROR  : A value other than an integer is specified in the second argument. Specify an integer. 
-
-  */
-
   // 第1引数の配列の個数が10個じゃないかつ第2引数に整数以外をセットした場合のエラー
   // echo($firstArgumentNotTenErrorAndSecondArgumentErrorResult->hashTableSearch());
   /*
   Hash Table Search
 
   ERROR  : A value other than an integer is specified in the second argument. Specify an integer. 
-
-  */
-
-  // 引数をセットしていない場合のエラー
-  // echo($notSetErrorResult->hashTableSearch());
-  /*
-  Linear Search
-
-  ERROR  : No value has been set. Set the array containing the value in the first argument and the you want to search integer in the second argument.
 
   */
 }
