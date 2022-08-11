@@ -268,8 +268,6 @@ class Sort{
       echo("\nto Ascending Order...\n\n");
 
       for($rightI = 1; $rightI < count($array); $rightI++){
-        $isExchange = false;
-
         for($leftI = $rightI - 1; $leftI > -1; $leftI--){
           if($rightI == 1){
             if($array[$leftI] > $array[$rightI]){
@@ -317,8 +315,6 @@ class Sort{
       echo("\nto Descending Order...\n\n");
 
       for($rightI = 1; $rightI < count($array); $rightI++){
-        $isExchange = false;
-
         for($leftI = $rightI - 1; $leftI > -1; $leftI--){
           if($rightI == 1){
             if($array[$leftI] < $array[$rightI]){
@@ -371,45 +367,181 @@ class Sort{
 
   // シェルソート
   public function shellSort(){
-    $array = $this->array;
+    $array              = $this->array;
+    $sortOrderSelection = $this->sortOrderSelection;
+    $resultCount        = 0;
+    $errorArray         = $this->errorMessage();
+
+    echo("Shell Sort");
+
+    // エラー出力
+    if(!empty($errorArray)){
+      echo("\n\n");
+
+      foreach($errorArray as $errorMessage){
+        echo($this->cecho("ERROR", 41).$this->cecho($errorMessage, 31)."\n");
+      }
+
+      echo("\n");
+
+      return;
+    }
+
+    // ソート実行
+    $divide     = floor(count($array) / 2);
+    $isExchange = false;
 
     // 0が昇順、1が降順
-    if($this->sortOrderSelection == 0){
-      return $array;
-    }elseif($this->sortOrderSelection == 1){
-      return $array;
+    if($sortOrderSelection == 0){
+      echo("\nto Ascending Order...\n\n");
+
+      while($divide != 1){
+        for($i = 0; $i < count($array) - $divide; $i++){
+          if($array[$i] > $array[$i + $divide]){
+            $isExchange          = true;
+            $exchange            = $array[$i];
+            $array[$i]           = $array[$i + $divide];
+            $array[$i + $divide] = $exchange;
+          }
+        }
+
+        if($isExchange){
+          $resultCount++;
+          $isExchange = false;
+
+          sleep(2);
+          echo("[".implode(", ", $array)."] >> ".$resultCount."\n");
+        }
+
+        $divide = floor($divide / 2);
+      }
+
+      // 挿入ソート実行
+      for($rightI = 1; $rightI < count($array); $rightI++){
+        for($leftI = $rightI - 1; $leftI > -1; $leftI--){
+          if($rightI == 1){
+            if($array[$leftI] > $array[$rightI]){
+              $resultCount++;
+              $exchange   = $array[$leftI];
+              $array[$leftI] = $array[$rightI];
+              $array[$rightI]  = $exchange;
+
+              sleep(2);
+              echo("[".implode(", ", $array)."] >> ".$resultCount."\n");
+            }
+          }else{
+            if($leftI == $rightI - 1){
+              if($array[$leftI] < $array[$rightI]){
+                break;
+              }else{
+                $minNumIndex = $leftI;
+              }
+            }else{
+              if($array[$leftI] < $array[$rightI]){
+                $resultCount++;
+                array_splice($array, $minNumIndex, 0, $array[$rightI]);
+                array_splice($array, $rightI + 1, 1);
+
+                sleep(2);
+                echo("[".implode(", ", $array)."] >> ".$resultCount."\n");
+                break;
+              }else{
+                $minNumIndex = $leftI;
+
+                if($minNumIndex == 0){
+                  $resultCount++;
+                  array_splice($array, $minNumIndex, 0, $array[$rightI]);
+                  array_splice($array, $rightI + 1, 1);
+
+                  sleep(2);
+                  echo("[".implode(", ", $array)."] >> ".$resultCount."\n");
+                }
+              }
+            }
+          }
+        }
+      }
     }else{
-      return "ERROR: Specify 0 or 1 for the second argument.";
+      echo("\nto Descending Order...\n\n");
+
+      while($divide != 1){
+        for($i = 0; $i < count($array) - $divide; $i++){
+          if($array[$i] < $array[$i + $divide]){
+            $isExchange          = true;
+            $exchange            = $array[$i];
+            $array[$i]           = $array[$i + $divide];
+            $array[$i + $divide] = $exchange;
+          }
+        }
+
+        if($isExchange){
+          $resultCount++;
+          $isExchange = false;
+
+          sleep(2);
+          echo("[".implode(", ", $array)."] >> ".$resultCount."\n");
+        }
+
+        $divide = floor($divide / 2);
+      }
+
+      // 挿入ソート実行
+      for($rightI = 1; $rightI < count($array); $rightI++){
+        for($leftI = $rightI - 1; $leftI > -1; $leftI--){
+          if($rightI == 1){
+            if($array[$leftI] < $array[$rightI]){
+              $resultCount++;
+              $exchange   = $array[$leftI];
+              $array[$leftI] = $array[$rightI];
+              $array[$rightI]  = $exchange;
+
+              sleep(2);
+              echo("[".implode(", ", $array)."] >> ".$resultCount."\n");
+            }
+          }else{
+            if($leftI == $rightI - 1){
+              if($array[$leftI] > $array[$rightI]){
+                break;
+              }else{
+                $minNumIndex = $leftI;
+              }
+            }else{
+              if($array[$leftI] > $array[$rightI]){
+                $resultCount++;
+                array_splice($array, $minNumIndex, 0, $array[$rightI]);
+                array_splice($array, $rightI + 1, 1);
+
+                sleep(2);
+                echo("[".implode(", ", $array)."] >> ".$resultCount."\n");
+                break;
+              }else{
+                $minNumIndex = $leftI;
+
+                if($minNumIndex == 0){
+                  $resultCount++;
+                  array_splice($array, $minNumIndex, 0, $array[$rightI]);
+                  array_splice($array, $rightI + 1, 1);
+
+                  sleep(2);
+                  echo("[".implode(", ", $array)."] >> ".$resultCount."\n");
+                }
+              }
+            }
+          }
+        }
+      }
     }
+
+    // 結果表示
+    sleep(2);
+    return "\n".$this->cecho("SUCCESS", 42).$this->cecho("\nSort Count: ".$resultCount, 32).$this->cecho("\nResult: [".implode(", ", $array)."]", 32);
   }
 
   // クイックソート
-  public function quickSort(){
-    $array = $this->array;
-
-    // 0が昇順、1が降順
-    if($this->sortOrderSelection == 0){
-      return $array;
-    }elseif($this->sortOrderSelection == 1){
-      return $array;
-    }else{
-      return "ERROR: Specify 0 or 1 for the second argument.";
-    }
-  }
+  public function quickSort(){}
 
   // マージソート
-  public function mergeSort(){
-    $array = $this->array;
-
-    // 0が昇順、1が降順
-    if($this->sortOrderSelection == 0){
-      return $array;
-    }elseif($this->sortOrderSelection == 1){
-      return $array;
-    }else{
-      return "ERROR: Specify 0 or 1 for the second argument.";
-    }
-  }
+  public function mergeSort(){}
 
   // ヒープソート
   public function heapSort(){}
@@ -629,7 +761,42 @@ $notSetErrorResult                                   = new Sort();
 }
 
 // シェルソート
-{}
+{
+  // 正常系:渡された配列を昇順にする
+  // echo($ascendingOrderResult->shellSort());
+  /*
+  Shell Sort
+  to Ascending Order...
+
+  [2, 4, 2, -5, 3, 6, 5, 1] >> 1
+  [2, -5, 2, 4, 3, 1, 5, 6] >> 2
+  [-5, 2, 2, 4, 3, 1, 5, 6] >> 3
+  [-5, 2, 2, 4, 3, 1, 5, 6] >> 4
+  [-5, 2, 2, 3, 4, 1, 5, 6] >> 5
+  [-5, 1, 2, 2, 3, 4, 5, 6] >> 6
+
+  SUCCESS  
+  Sort Count: 6
+  Result: [-5, 1, 2, 2, 3, 4, 5, 6]
+  */
+
+  // 正常系:渡された配列を降順にする
+  // echo($descendingOrderResult->shellSort());
+  /*
+  Shell Sort
+  to Descending Order...
+
+  [3, 6, 5, 1, 2, 4, 2, -5] >> 1
+  [5, 6, 3, 4, 2, 1, 2, -5] >> 2
+  [6, 5, 3, 4, 2, 1, 2, -5] >> 3
+  [6, 5, 4, 3, 2, 1, 2, -5] >> 4
+  [6, 5, 4, 3, 2, 2, 1, -5] >> 5
+
+  SUCCESS       
+  Sort Count: 5  
+  Result: [6, 5, 4, 3, 2, 2, 1, -5]
+  */
+}
 
 // クイックソート
 {}
