@@ -561,44 +561,8 @@ $firstEmptyErrorAndSecondNotZeroAndOneErrorResult    = new Sort([], 404);
 $notSetErrorResult                                   = new Sort();
 
 // 結果出力
-// バブルソート
+// エラーパターン
 {
-  // 正常系:渡された配列を昇順にする
-  // echo($ascendingOrderResult->bubbleSort());
-  /*
-  Bubble Sort
-  to Ascending Order...
-
-  [2, 5, 1, 3, 4, 2, -5, 6] >> 1
-  [2, 1, 3, 4, 2, -5, 5, 6] >> 2
-  [1, 2, 3, 2, -5, 4, 5, 6] >> 3
-  [1, 2, 2, -5, 3, 4, 5, 6] >> 4
-  [1, 2, -5, 2, 3, 4, 5, 6] >> 5
-  [1, -5, 2, 2, 3, 4, 5, 6] >> 6
-  [-5, 1, 2, 2, 3, 4, 5, 6] >> 7
-
-  SUCCESS
-  Sort Count: 7
-  Result: [-5, 1, 2, 2, 3, 4, 5, 6]
-
-  */
-
-  // 正常系:渡された配列を降順にする
-  // echo($descendingOrderResult->bubbleSort());
-  /*
-  Bubble Sort
-  to Descending Order...
-
-  [6, 2, 5, 4, 1, 3, 2, -5] >> 1
-  [6, 5, 2, 4, 3, 1, 2, -5] >> 2
-  [6, 5, 4, 2, 3, 2, 1, -5] >> 3
-  [6, 5, 4, 3, 2, 2, 1, -5] >> 4
-
-  SUCCESS
-  Sort Count: 4
-  Result: [6, 5, 4, 3, 2, 2, 1, -5]
-  */
-
   // 第1引数に配列以外をセットした場合のエラー
   // echo($firstArgumentErrorResult->bubbleSort());
   /*
@@ -682,6 +646,45 @@ $notSetErrorResult                                   = new Sort();
 
   ERROR: No value has been set. Set the array containing the value in the first argument and the specify integer of 0 or 1 in the second argument.
 
+  */
+}
+
+// バブルソート
+{
+  // 正常系:渡された配列を昇順にする
+  // echo($ascendingOrderResult->bubbleSort());
+  /*
+  Bubble Sort
+  to Ascending Order...
+
+  [2, 5, 1, 3, 4, 2, -5, 6] >> 1
+  [2, 1, 3, 4, 2, -5, 5, 6] >> 2
+  [1, 2, 3, 2, -5, 4, 5, 6] >> 3
+  [1, 2, 2, -5, 3, 4, 5, 6] >> 4
+  [1, 2, -5, 2, 3, 4, 5, 6] >> 5
+  [1, -5, 2, 2, 3, 4, 5, 6] >> 6
+  [-5, 1, 2, 2, 3, 4, 5, 6] >> 7
+
+  SUCCESS
+  Sort Count: 7
+  Result: [-5, 1, 2, 2, 3, 4, 5, 6]
+
+  */
+
+  // 正常系:渡された配列を降順にする
+  // echo($descendingOrderResult->bubbleSort());
+  /*
+  Bubble Sort
+  to Descending Order...
+
+  [6, 2, 5, 4, 1, 3, 2, -5] >> 1
+  [6, 5, 2, 4, 3, 1, 2, -5] >> 2
+  [6, 5, 4, 2, 3, 2, 1, -5] >> 3
+  [6, 5, 4, 3, 2, 2, 1, -5] >> 4
+
+  SUCCESS
+  Sort Count: 4
+  Result: [6, 5, 4, 3, 2, 2, 1, -5]
   */
 }
 
