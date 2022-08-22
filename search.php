@@ -294,25 +294,24 @@ class Search{
       return "\n\n".$this->cecho("No value was specified.", 43);
     }
   }
-
-  // オープンアドレス法
-  public function openAddress(){}
-
-  // ハッシュチェイン法
-  public function hashChain(){}
 }
 
 // クラス生成
+// 二分探索法のテストデータ
 $binarySearchToAscendingOrderResult                                               = new Search(array(1, 2, 3, 4, 5, 6, 7), 5);
 $binarySearchToDescendingOrderResult                                              = new Search(array(7, 6, 5, 4, 3, 2, 1), 6);
 $firstArgumentNotAscendingOrderOrDescendingOrderErrorResultForBinarySearch        = new Search(array(6, 9, 3, 4, 1, 0, -7), 4);
 $firstArgumentNotAscendingOrderOrDescendingOrderErrorAndSecondArgumentErrorResult = new Search(array(6, 9, 3, 4, 1, 0, -7), array(4, 0, 4));
 $canNotSearchResultForBinarySearchToAscendingOrder                                = new Search(array(1, 2, 3, 4, 5, 6, 7), 8);
 $canNotSearchResultForBinarySearchToDescendingOrder                               = new Search(array(7, 6, 5, 4, 3, 2, 1), 8);
+
+// ハッシュ表探索のテストデータ
 $hashTableSearchResult                                                            = new Search(array(19, 120, 961, 72, 283, 404, 765, 346, 27, 88), 765);
 $canNotSearchResultFotHashTableSearch                                             = new Search(array(19, 120, 961, 72, 283, 404, 765, 346, 27, 88), 43);
 $notTenErrorResultFotHashTableSearch                                              = new Search(array(6, 9, 3, 4, 1, 0, -7), 4);
 $firstArgumentNotTenErrorAndSecondArgumentErrorResult                             = new Search(array(6, 9, 3, 4, 1, 0, -7), array(4, 0, 4));
+
+// それ以外のテストデータ
 $otherSearchResult                                                                = new Search(array(6, 9, 3, 4, 1, 0, -7), 4);
 $canNotSearchResult                                                               = new Search(array(6, 9, 3, 4, 1, 0, -7), 8);
 $firstArgumentErrorResult                                                         = new Search(404, 4);
@@ -527,11 +526,4 @@ $notSetErrorResult                                                              
 
   */
 }
-
-// オープンアドレス法
-{}
-
-// ハッシュチェイン法
-{}
-
 ?>
