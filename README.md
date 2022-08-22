@@ -19,5 +19,3 @@ The sort.php file contains the following algorithm.
 * Linear Search
 * Binary Search
 * Hash Table Search
-* Open Address
-* Hash Chain
